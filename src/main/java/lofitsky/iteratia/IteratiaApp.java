@@ -8,5 +8,7 @@ public class IteratiaApp {
 
 	public static void main(String[] args) {
 		SpringApplication.run(IteratiaApp.class, args);
+
+		System.exit(0);
 	}
 }
