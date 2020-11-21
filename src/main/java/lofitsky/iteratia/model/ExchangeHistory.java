@@ -19,11 +19,11 @@ public class ExchangeHistory {
     Date date;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(referencedColumnName = "numCode", nullable = false)
     Currency currencyFrom;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(referencedColumnName = "numCode", nullable = false)
     Currency currencyTo;
 
     @Column(columnDefinition = "Numeric(20, 10)", nullable = false)

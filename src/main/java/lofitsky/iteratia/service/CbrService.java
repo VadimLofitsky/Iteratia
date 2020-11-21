@@ -56,8 +56,12 @@ public class CbrService {
         return getValutes(cached);
     }
 
-    public Date getDate() throws ParseException {
-        SimpleDateFormat fromXML = new SimpleDateFormat("dd.MM.yyyy");
-        return fromXML.parse(valcurs.getDate());
+    public Date getDate() {
+        try {
+            SimpleDateFormat fromXML = new SimpleDateFormat("dd.MM.yyyy");
+            return fromXML.parse(valcurs.getDate());
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }
