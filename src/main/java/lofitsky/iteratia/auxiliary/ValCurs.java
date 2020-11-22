@@ -1,5 +1,6 @@
-package lofitsky.iteratia.model;
+package lofitsky.iteratia.auxiliary;
 
+import lofitsky.iteratia.model.Currency;
 import lombok.Data;
 
 import javax.xml.bind.annotation.*;

@@ -1,8 +1,8 @@
 package lofitsky.iteratia.service;
 
+import lofitsky.iteratia.auxiliary.ValCurs;
 import lofitsky.iteratia.config.Endpoints;
 import lofitsky.iteratia.model.Currency;
-import lofitsky.iteratia.model.ValCurs;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;

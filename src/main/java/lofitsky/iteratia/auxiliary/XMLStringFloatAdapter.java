@@ -1,4 +1,4 @@
-package lofitsky.iteratia.util;
+package lofitsky.iteratia.auxiliary;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

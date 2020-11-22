@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
@@ -17,6 +19,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     private CurrencyRepo currencyRepo;
     private CbrService cbrService;
     private UpdateService updateService;
+
+    private Map<Integer, String> charCodes;
 
     @Autowired
     public CurrencyServiceImpl(CurrencyRepo currencyRepo,
@@ -32,7 +36,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         if ((latestUpdate == null) || yesterday.equals(LocalDate.parse(latestUpdate.toString()))) {
             System.out.println("Getting updates");
-            updateCurrencies();
+            charCodes = updateCurrencies();
             System.out.println("Done");
         } else {
             System.out.println("All data is up to date");
@@ -63,12 +67,22 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public void updateCurrencies() {
+    public Map<Integer, String> updateCurrencies() {
         List<Currency> currencies = cbrService.getCurrencies(false);
         saveAll(currencies);
 
         Update update = new Update();
         update.setDate(cbrService.getDate());
         updateService.save(update);
+
+        Map<Integer, String> charCodes = currencies.stream()
+                .collect(Collectors.toMap(Currency::getNumCode, Currency::getCharCode));
+
+        return charCodes;
+    }
+
+    @Override
+    public String charCodeByNumCode(int numCode) {
+        return charCodes.get(numCode);
     }
 }

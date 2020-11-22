@@ -1,6 +1,6 @@
 package lofitsky.iteratia.model;
 
-import lofitsky.iteratia.util.XMLStringFloatAdapter;
+import lofitsky.iteratia.auxiliary.XMLStringFloatAdapter;
 import lombok.Data;
 
 import javax.persistence.*;
