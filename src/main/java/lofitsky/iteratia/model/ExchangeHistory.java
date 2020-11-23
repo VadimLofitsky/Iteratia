@@ -3,7 +3,7 @@ package lofitsky.iteratia.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -14,9 +14,8 @@ public class ExchangeHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    Date date;
+    LocalDateTime date;
 
     @OneToOne
     @JoinColumn(referencedColumnName = "numCode", nullable = false)

@@ -1,0 +1,27 @@
+.dollar {
+    color: #778e6c;
+}
+
+.mybadge {
+    font-weight: 700;
+    font-size: 75%;
+}
+
+svg.separator {
+    position: relative;
+    top: 5px;
+    height: 24px;
+    width: 24px;
+}
+
+input[type=number] {
+    max-width: 50% !important;
+}
+
+select {
+    display: inline;
+}
+
+option.not-available {
+    display: none;
+}

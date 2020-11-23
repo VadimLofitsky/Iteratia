@@ -34,7 +34,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         Date latestUpdate = updateService.findLatest();
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
-        if ((latestUpdate == null) || yesterday.equals(LocalDate.parse(latestUpdate.toString()))) {
+        if ((latestUpdate == null) || yesterday.compareTo(LocalDate.parse(latestUpdate.toString())) < 1) {
             System.out.println("Getting updates");
             charCodes = updateCurrencies();
             System.out.println("Done");
@@ -84,5 +84,10 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public String charCodeByNumCode(int numCode) {
         return charCodes.get(numCode);
+    }
+
+    @Override
+    public Currency findByNumCode(int numCode) {
+        return currencyRepo.findByNumCode(numCode);
     }
 }

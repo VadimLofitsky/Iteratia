@@ -15,4 +15,6 @@ public interface CurrencyService {
     Map<Integer, String> updateCurrencies();
 
     String charCodeByNumCode(int numCode);
+
+    Currency findByNumCode(int numCode);
 }
