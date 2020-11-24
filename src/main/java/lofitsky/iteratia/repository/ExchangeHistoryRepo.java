@@ -23,4 +23,6 @@ public interface ExchangeHistoryRepo extends JpaRepository<ExchangeHistory, Long
             "    where date >= (now() - interval '1 week') " +
             "    group by currency_from_num_code, currency_to_num_code")
     List<Object[]> weekStat();
+
+    List<ExchangeHistory> findAllByIdGreaterThanOrderByIdDesc(long lastId);
 }

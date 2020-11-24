@@ -1,5 +1,6 @@
 package lofitsky.iteratia.service;
 
+import lofitsky.iteratia.auxiliary.ExchangeHistoryOperation;
 import lofitsky.iteratia.auxiliary.ExchangeHistoryStat;
 import lofitsky.iteratia.model.ExchangeHistory;
 import lofitsky.iteratia.repository.ExchangeHistoryRepo;
@@ -44,5 +45,26 @@ public class ExchangeHistoryServiceImpl implements ExchangeHistoryService {
                 stat.setCharCodeTo(currencyService.charCodeByNumCode(stat.getCodeTo())));
 
         return stats;
+    }
+
+    @Override
+    public List<ExchangeHistoryOperation> findAllOps(long lastId) {
+        return historyRepo.findAllByIdGreaterThanOrderByIdDesc(lastId).stream()
+                .map(op -> {
+                    return ExchangeHistoryOperation.builder()
+                            .id(op.getId())
+                            .date(op.getDate().toString())
+                            .charCode1(op.getCurrencyFrom().getCharCode())
+                            .numCode1(op.getCurrencyFrom().getNumCode())
+                            .name1(op.getCurrencyFrom().getName())
+                            .amount1(op.getAmount())
+                            .charCode2(op.getCurrencyTo().getCharCode())
+                            .numCode2(op.getCurrencyTo().getNumCode())
+                            .name2(op.getCurrencyTo().getName())
+                            .amount2(op.getAmount() * op.getRate())
+                            .rate(op.getRate())
+                            .build();
+                    })
+                .collect(Collectors.toList());
     }
 }

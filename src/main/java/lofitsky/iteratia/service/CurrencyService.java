@@ -17,4 +17,6 @@ public interface CurrencyService {
     String charCodeByNumCode(int numCode);
 
     Currency findByNumCode(int numCode);
+
+    List<Currency> findAll(boolean forceSending);
 }

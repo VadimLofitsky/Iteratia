@@ -6,13 +6,14 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "currency")
 @XmlRootElement(name = "Valute")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Currency {
+public class Currency implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
