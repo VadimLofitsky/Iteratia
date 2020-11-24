@@ -3,6 +3,7 @@ package lofitsky.iteratia.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lofitsky.iteratia.auxiliary.ExchangeHistoryOperation;
+import lofitsky.iteratia.auxiliary.ExchangeHistoryStat;
 import lofitsky.iteratia.config.Endpoints;
 import lofitsky.iteratia.model.Currency;
 import lofitsky.iteratia.model.ExchangeHistory;
@@ -68,6 +69,14 @@ public class CurrencyControllerREST {
     JsonNode allCurrencies(@RequestParam boolean force) {
         ObjectMapper mapper = new ObjectMapper();
         List<Currency> all = currencyService.findAll(force);
+        return mapper.valueToTree(all);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(Endpoints.MAPPING_STATS_GET_TOP)
+    JsonNode allStatRecords() {
+        ObjectMapper mapper = new ObjectMapper();
+        List<ExchangeHistoryStat> all = historyService.weekStat();
         return mapper.valueToTree(all);
     }
 }

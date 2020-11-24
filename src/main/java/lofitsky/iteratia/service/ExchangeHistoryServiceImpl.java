@@ -38,12 +38,6 @@ public class ExchangeHistoryServiceImpl implements ExchangeHistoryService {
                 .map(ExchangeHistoryStat::new)
                 .collect(Collectors.toList());
 
-        stats.forEach(stat ->
-                stat.setCharCodeFrom(currencyService.charCodeByNumCode(stat.getCodeFrom())));
-
-        stats.forEach(stat ->
-                stat.setCharCodeTo(currencyService.charCodeByNumCode(stat.getCodeTo())));
-
         return stats;
     }
 

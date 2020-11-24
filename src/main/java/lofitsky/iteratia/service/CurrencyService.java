@@ -3,7 +3,6 @@ package lofitsky.iteratia.service;
 import lofitsky.iteratia.model.Currency;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CurrencyService {
     List<Currency> findAll();
@@ -12,9 +11,7 @@ public interface CurrencyService {
 
     void saveAll(List<Currency> list);
 
-    Map<Integer, String> updateCurrencies();
-
-    String charCodeByNumCode(int numCode);
+    void updateCurrencies();
 
     Currency findByNumCode(int numCode);
 

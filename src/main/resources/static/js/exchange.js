@@ -33,21 +33,22 @@ function exchange_init() {
     $(exchange_selectTo).change(exchange_onSelectToChange);
     $(exchange_inputAmount1).keyup(exchange_inputFromChange);
 
-    exchange_checkForUpdates(true);
+    exchange_checkForUpdates(false,true, exchange_fillSelects);
 }
 
 function exchange_onTabActive() {
-    exchange_checkForUpdates();
+    exchange_checkForUpdates(false,false, exchange_fillSelects);
 }
 
-function exchange_checkForUpdates(force = false) {
-    exchange_getCurrencies(force, exchange_fillSelects);
+function exchange_checkForUpdates(force = false, async = true, callback) {
+    exchange_getCurrencies(force, async, callback);
 }
 
-function exchange_getCurrencies(force, callback) {
+function exchange_getCurrencies(force, async, callback) {
     $.ajax({
         url: ROUTE_GET_ALL_CURRENCIES,
         method: "GET",
+        async: async,
         cache: false,
         headers: {
             Accept: "application/json; charset=utf-8"
@@ -65,6 +66,9 @@ function exchange_getCurrencies(force, callback) {
                                                           curr.nominal,
                                                           curr.name));
                 });
+            }
+
+            if (callback) {
                 callback.call(response);
             }
         }
@@ -157,4 +161,16 @@ function exchange_reset() {
     exchange_onSelectFromChange();
     exchange_inputFromChange();
     exchange_onSelectToChange();
+}
+
+function exchange_getCurrencyNameByNumCode(numCode) {
+    return exchange_currencies
+        .filter((v) => { return v.numCode == numCode; })[0]
+        .name;
+}
+
+function exchange_getCurrencyCharCodeByNumCode(numCode) {
+    return exchange_currencies
+        .filter((v) => { return v.numCode == numCode; })[0]
+        .charCode;
 }

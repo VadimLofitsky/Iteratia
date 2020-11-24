@@ -7,12 +7,10 @@ function history_init() {
 }
 
 function history_onTabActive() {
-    history_updateTable();
+    history_getNewOperations(history_updateTable);
 }
 
 function history_updateTable() {
-    history_getNewOperations();
-
     if (history_newOperations.length == 0) { return; }
     
     var table = $("#history_table>tbody")[0];
@@ -27,11 +25,10 @@ function history_updateTable() {
     history_newOperations = [];
 }
 
-function history_getNewOperations() {
+function history_getNewOperations(callback) {
     $.ajax({
-        url: ROUTE_GET_TOP_OPERATIONS,
+        url: ROUTE_HISTORY_GET_TOP,
         method: "GET",
-        async: false,
         cache: false,
         data: {
           lastId: history_lastId
@@ -41,6 +38,9 @@ function history_getNewOperations() {
         },
         success: (response) => {
             history_newOperations = response;
+            if (callback) {
+                callback.call(response);
+            }
         }
     });
 }
@@ -50,11 +50,11 @@ function history_createNewTR(operation) {
     html += "<td class=\"history-col-onum\">" + operation.id + "</td>";
     html += "<td class=\"history-col-date\">" + operation.date + "</td>";
     html += "<td class=\"history-col-char-code\">" + operation.charCode1 + "</td>";
-    html += "<td class=\"history-col-char-code\">" + operation.numCode1 + "</td>";
+    html += "<td class=\"history-col-num-code\">" + operation.numCode1 + "</td>";
     html += "<td class=\"history-col-name\">" + operation.name1 + "</td>";
     html += "<td class=\"history-col-amount\">" + operation.amount1 + "</td>";
     html += "<td class=\"history-col-char-code\">" + operation.charCode2 + "</td>";
-    html += "<td class=\"history-col-char-code\">" + operation.numCode2 + "</td>";
+    html += "<td class=\"history-col-num-code\">" + operation.numCode2 + "</td>";
     html += "<td class=\"history-col-name\">" + operation.name2 + "</td>";
     html += "<td class=\"history-col-amount\">" + operation.amount2 + "</td>";
     html += "<td class=\"history-col-rate\">" + operation.rate + "</td>";

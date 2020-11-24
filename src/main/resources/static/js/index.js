@@ -3,8 +3,11 @@ document.addEventListener("DOMContentLoaded", start);
 function start() {
     setupOnTabActiveHandlers();
 
+    exchange_checkForUpdates(true, false);
+
     exchange_init();
     history_init();
+    stats_init();
 }
 
 function setupOnTabActiveHandlers() {
@@ -17,6 +20,10 @@ function setupOnTabActiveHandlers() {
             }
             case "history": {
                 history_onTabActive();
+                break;
+            }
+            case "stat": {
+                stats_onTabActive();
                 break;
             }
         }

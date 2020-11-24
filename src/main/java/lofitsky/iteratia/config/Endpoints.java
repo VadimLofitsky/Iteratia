@@ -9,5 +9,7 @@ public final class Endpoints {
     public static final String MAPPING_EXCHANGE_GET_ALL_CURRENCIES = MAPPING_ROOT + "/currency";
     public static final String MAPPING_EXCHANGE_OPERATION_SAVE = MAPPING_ROOT + "/save-exchange-operation";
 
-    public static final String MAPPING_HISTORY_GET_TOP = MAPPING_ROOT + "/get-top";
+    public static final String MAPPING_HISTORY_GET_TOP = MAPPING_ROOT + "/history/top";
+
+    public static final String MAPPING_STATS_GET_TOP = MAPPING_ROOT + "/stats/top";
 }

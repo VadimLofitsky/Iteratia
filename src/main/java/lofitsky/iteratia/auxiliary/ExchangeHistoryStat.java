@@ -2,6 +2,8 @@ package lofitsky.iteratia.auxiliary;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ExchangeHistoryStat {
     private int codeFrom;
@@ -14,9 +16,7 @@ public class ExchangeHistoryStat {
     public ExchangeHistoryStat(Object[] args) {
         codeFrom = ((int) args[0]);
         codeTo = ((int) args[1]);
-        avgRate = ((float) args[2]);
-        sumTotal = ((float) args[3]);
-        charCodeFrom = ((String) args[4]);
-        charCodeTo = ((String) args[5]);
+        avgRate = ((BigDecimal) args[2]).floatValue();
+        sumTotal = ((BigDecimal) args[3]).floatValue();
     }
 }

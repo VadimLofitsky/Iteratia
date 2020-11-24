@@ -64,3 +64,29 @@ table#history_table td.history-col-num-code { width: 1.56%; }
 table#history_table td.history-col-name { width: 18.75%; }
 table#history_table td.history-col-amount { width: 12.5%; }
 table#history_table td.history-col-rate { width: 12.5%; }
+
+/*
+Stats pane
+*/
+
+table#stats_table * {
+    vertical-align: middle !important;
+}
+
+table#stats_table td.thead-subcolumn {
+    font-size: smaller;
+}
+
+table#stats_table td:not(.thead-subcolumn) {
+    font-weight: bold;
+}
+
+table#stats_table>tbody>tr {
+    font-size: smaller;
+}
+
+table#stats_table td.stats-col-char-code { width: 1.56%; }
+table#stats_table td.stats-col-num-code { width: 1.56%; }
+table#stats_table td.stats-col-name { width: 18.75%; }
+table#stats_table td.stats-col-sum { width: 12.5%; }
+table#stats_table td.stats-col-rate { width: 12.5%; }
