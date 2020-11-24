@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", start);
 function start() {
     setupOnTabActiveHandlers();
 
+    $("#exit-button").click(exitApp);
+
     exchange_checkForUpdates(true, false);
 
     exchange_init();
@@ -40,4 +42,9 @@ function dateToUTC(dt) {
 
     date -= dt.getTimezoneOffset() * 60;     // ???
     return date;
+}
+
+function exitApp() {
+    $.post(ROUTE_EXIT_APP);
+    window.setTimeout(() => { window.close(); }, 300);
 }

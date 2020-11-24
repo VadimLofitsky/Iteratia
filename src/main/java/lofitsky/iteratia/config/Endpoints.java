@@ -12,4 +12,5 @@ public final class Endpoints {
     public static final String MAPPING_HISTORY_GET_TOP = "/history/top";
 
     public static final String MAPPING_STATS_GET_TOP = "/stats/top";
+    public static final String MAPPING_EXIT_APP = "/exit";
 }

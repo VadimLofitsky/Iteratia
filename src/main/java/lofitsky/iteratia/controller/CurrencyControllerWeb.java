@@ -20,4 +20,11 @@ public class CurrencyControllerWeb {
 
         return Endpoints.TEMPLATES_MAIN_PAGE;
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(Endpoints.MAPPING_EXIT_APP)
+    public void exit() {
+        System.out.println("Exit by user");
+        System.exit(0);
+    }
 }

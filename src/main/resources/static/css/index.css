@@ -1,3 +1,13 @@
+#exit-button {
+    zoom: 1.5;
+    color: #721c24;
+}
+
+#exit-button:hover {
+    color: red;
+    zoom: 1.75;
+}
+
 .tab-header {
     text-align: center;
     font-size: x-large;
