@@ -8,9 +8,10 @@
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>lofitsky</groupId>
 	<artifactId>iteratia</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>iteratia</name>
 	<description>Iteratia test task</description>
 
@@ -52,16 +53,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<mainClass>lofitsky.iteratia.IteratiaApp</mainClass>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>fat</classifier>
+							<mainClass>
+								lofitsky.iteratia.IteratiaApp
+							</mainClass>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

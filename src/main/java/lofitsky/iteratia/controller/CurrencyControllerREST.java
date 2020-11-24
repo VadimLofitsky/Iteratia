@@ -1,7 +1,5 @@
 package lofitsky.iteratia.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lofitsky.iteratia.auxiliary.ExchangeHistoryOperation;
 import lofitsky.iteratia.auxiliary.ExchangeHistoryStat;
 import lofitsky.iteratia.config.Endpoints;
@@ -9,8 +7,9 @@ import lofitsky.iteratia.model.Currency;
 import lofitsky.iteratia.model.ExchangeHistory;
 import lofitsky.iteratia.service.CurrencyService;
 import lofitsky.iteratia.service.ExchangeHistoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -18,21 +17,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
+@RequestMapping(Endpoints.MAPPING_ROOT)
 public class CurrencyControllerREST {
 
     private CurrencyService currencyService;
     private ExchangeHistoryService historyService;
 
-    @Autowired
-    public CurrencyControllerREST(CurrencyService currencyService, ExchangeHistoryService historyService) {
-        this.currencyService = currencyService;
-        this.historyService = historyService;
-    }
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(Endpoints.MAPPING_EXCHANGE_OPERATION_SAVE)
-    void saveExchangeOperation(@RequestParam("curr1") String numCodeFrom,
+    public void saveExchangeOperation(@RequestParam("curr1") String numCodeFrom,
                                @RequestParam("curr2") String numCodeTo,
                                @RequestParam("amount1") String amount,
                                @RequestParam("date") String timeStamp) {
@@ -57,26 +52,26 @@ public class CurrencyControllerREST {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(Endpoints.MAPPING_HISTORY_GET_TOP)
-    JsonNode historyGetTop(@RequestParam("lastId") long lastId) {
-        ObjectMapper mapper = new ObjectMapper();
-        List<ExchangeHistoryOperation> ops = historyService.findAllOps(lastId);
-        return mapper.valueToTree(ops);
+    @RequestMapping(value = Endpoints.MAPPING_HISTORY_GET_TOP,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ExchangeHistoryOperation> historyGetTop(@RequestParam("lastId") long lastId) {
+        return historyService.findAllOps(lastId);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(Endpoints.MAPPING_EXCHANGE_GET_ALL_CURRENCIES)
-    JsonNode allCurrencies(@RequestParam boolean force) {
-        ObjectMapper mapper = new ObjectMapper();
-        List<Currency> all = currencyService.findAll(force);
-        return mapper.valueToTree(all);
+    @RequestMapping(value = Endpoints.MAPPING_EXCHANGE_GET_ALL_CURRENCIES,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Currency> allCurrencies(@RequestParam boolean force) {
+        return currencyService.findAll(force);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(Endpoints.MAPPING_STATS_GET_TOP)
-    JsonNode allStatRecords() {
-        ObjectMapper mapper = new ObjectMapper();
-        List<ExchangeHistoryStat> all = historyService.weekStat();
-        return mapper.valueToTree(all);
+    @RequestMapping(value = Endpoints.MAPPING_STATS_GET_TOP,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ExchangeHistoryStat> allStatRecords() {
+        return historyService.weekStat();
     }
 }
