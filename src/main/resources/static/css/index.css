@@ -1,0 +1,111 @@
+#exit-button {
+    zoom: 1.5;
+    color: #721c24;
+}
+
+#exit-button:hover {
+    color: red;
+    zoom: 1.75;
+}
+
+.tab-header {
+    text-align: center;
+    font-size: x-large;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+
+/*
+Exchange pane
+*/
+
+.dollar {
+    color: #778e6c;
+}
+
+.mybadge {
+    font-weight: 700;
+    font-size: 75%;
+}
+
+svg.separator {
+    position: relative;
+    top: 5px;
+    height: 24px;
+    width: 24px;
+}
+
+input[type=number] {
+    max-width: 50% !important;
+}
+
+select {
+    display: inline;
+}
+
+option.not-available {
+    display: none;
+}
+
+/*
+History pane
+*/
+
+table#history_table * {
+    vertical-align: middle !important;
+}
+
+table#history_table td.thead-subcolumn {
+    font-size: smaller;
+}
+
+table#history_table td:not(.thead-subcolumn) {
+    font-weight: bold;
+}
+
+table#history_table>tbody>tr {
+    font-size: smaller;
+}
+
+table#history_table td.history-col-onum { width: 6.25%; }
+table#history_table td.history-col-date { width: 12.5%; }
+table#history_table td.history-col-char-code { width: 1.56%; }
+table#history_table td.history-col-num-code { width: 1.56%; }
+table#history_table td.history-col-name { width: 18.75%; }
+table#history_table td.history-col-amount { width: 12.5%; }
+table#history_table td.history-col-rate { width: 12.5%; }
+
+/*
+Stats pane
+*/
+
+table#stats_table * {
+    vertical-align: middle !important;
+}
+
+table#stats_table td.thead-subcolumn {
+    font-size: smaller;
+}
+
+table#stats_table td:not(.thead-subcolumn) {
+    font-weight: bold;
+}
+
+table#stats_table>tbody>tr {
+    font-size: smaller;
+}
+
+table#stats_table td.stats-col-char-code { width: 1.56%; }
+table#stats_table td.stats-col-num-code { width: 1.56%; }
+table#stats_table td.stats-col-name { width: 18.75%; }
+table#stats_table td.stats-col-sum { width: 12.5%; }
+table#stats_table td.stats-col-rate { width: 12.5%; }
+
+.rotating {
+    animation: rotation 2s cubic-bezier(.5, 0, .5, 1) infinite;
+}
+
+@keyframes rotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
