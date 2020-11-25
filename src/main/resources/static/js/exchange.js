@@ -33,22 +33,22 @@ function exchange_init() {
     $(exchange_selectTo).change(exchange_onSelectToChange);
     $(exchange_inputAmount1).keyup(exchange_inputFromChange);
 
-    exchange_checkForUpdates(false,true, exchange_fillSelects);
+    exchange_checkForUpdates(true, exchange_fillSelects);
 }
 
 function exchange_onTabActive() {
-    exchange_checkForUpdates(false,false, exchange_fillSelects);
+    exchange_checkForUpdates(false, exchange_fillSelects);
 }
 
-function exchange_checkForUpdates(force = false, async = true, callback) {
-    exchange_getCurrencies(force, async, callback);
+function exchange_checkForUpdates(force = false, callback) {
+    exchange_getCurrencies(force, callback);
 }
 
-function exchange_getCurrencies(force, async, callback) {
+function exchange_getCurrencies(force, callback) {
+    exchange_startAnimation();
     $.ajax({
         url: ROUTE_GET_ALL_CURRENCIES,
         method: "GET",
-        async: async,
         cache: false,
         headers: {
             Accept: "application/json; charset=utf-8"
@@ -72,7 +72,7 @@ function exchange_getCurrencies(force, async, callback) {
                 callback.call(response);
             }
         }
-    });
+    }).done(() => { exchange_stopAnimation(); });
 }
 
 function exchange_fillSelects() {
@@ -173,4 +173,12 @@ function exchange_getCurrencyCharCodeByNumCode(numCode) {
     return exchange_currencies
         .filter((v) => { return v.numCode == numCode; })[0]
         .charCode;
+}
+
+function exchange_startAnimation() {
+    startAnimation($(".exchange-rotatable"));
+}
+
+function exchange_stopAnimation() {
+    stopAnimation($(".exchange-rotatable"));
 }

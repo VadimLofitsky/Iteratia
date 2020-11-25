@@ -100,3 +100,12 @@ table#stats_table td.stats-col-num-code { width: 1.56%; }
 table#stats_table td.stats-col-name { width: 18.75%; }
 table#stats_table td.stats-col-sum { width: 12.5%; }
 table#stats_table td.stats-col-rate { width: 12.5%; }
+
+.rotating {
+    animation: rotation 2s cubic-bezier(.5, 0, .5, 1) infinite;
+}
+
+@keyframes rotation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}

@@ -24,16 +24,13 @@ public class CurrencyService {
         this.currencyRepo = currencyRepo;
         this.cbrService = cbrService;
         this.updateService = updateService;
-
-        checkUpdates();
     }
 
     private boolean checkUpdates() {
         Date latestUpdate = updateService.findLatest();
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
-        LocalDate latestUpdateLocal = LocalDate.parse(latestUpdate.toString());
-        if ((latestUpdate == null) || yesterday.compareTo(latestUpdateLocal) >= 1) {
+        if ((latestUpdate == null) || yesterday.compareTo(LocalDate.parse(latestUpdate.toString())) >= 1) {
             System.out.println("Getting updates");
             updateCurrencies();
             System.out.println("Done");

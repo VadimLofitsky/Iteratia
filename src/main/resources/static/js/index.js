@@ -5,8 +5,6 @@ function start() {
 
     $("#exit-button").click(exitApp);
 
-    exchange_checkForUpdates(true, false);
-
     exchange_init();
     history_init();
     stats_init();
@@ -47,4 +45,12 @@ function dateToUTC(dt) {
 function exitApp() {
     $.post(ROUTE_EXIT_APP);
     window.setTimeout(() => { window.close(); }, 300);
+}
+
+function startAnimation(el) {
+    $(el).addClass("rotating");
+}
+
+function stopAnimation(el) {
+    $(el).removeClass("rotating");
 }

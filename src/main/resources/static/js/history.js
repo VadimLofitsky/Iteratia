@@ -26,6 +26,7 @@ function history_updateTable() {
 }
 
 function history_getNewOperations(callback) {
+    history_startAnimation();
     $.ajax({
         url: ROUTE_HISTORY_GET_TOP,
         method: "GET",
@@ -42,7 +43,7 @@ function history_getNewOperations(callback) {
                 callback.call(response);
             }
         }
-    });
+    }).done(() => { history_stopAnimation(); });
 }
 
 function history_createNewTR(operation) {
@@ -60,4 +61,12 @@ function history_createNewTR(operation) {
     html += "<td class=\"history-col-rate\">" + operation.rate + "</td>";
     html += "</tr>";
     return html;
+}
+
+function history_startAnimation() {
+    startAnimation($(".history-rotatable"));
+}
+
+function history_stopAnimation() {
+    stopAnimation($(".history-rotatable"));
 }

@@ -24,6 +24,7 @@ function stats_updateTable() {
 }
 
 function stats_getAllRecords(callback) {
+    stats_startAnimation();
     $.ajax({
         url: ROUTE_STATS_GET_TOP,
         method: "GET",
@@ -37,7 +38,7 @@ function stats_getAllRecords(callback) {
                 callback.call(response);
             }
         }
-    });
+    }).done(() => { stats_stopAnimation(); });
 }
 
 function stats_createNewTR(record) {
@@ -52,4 +53,12 @@ function stats_createNewTR(record) {
     html += "<td class=\"stats-col-rate\">" + record.avgRate + "</td>";
     html += "</tr>";
     return html;
+}
+
+function stats_startAnimation() {
+    startAnimation($(".stat-rotatable"));
+}
+
+function stats_stopAnimation() {
+    stopAnimation($(".stat-rotatable"));
 }
