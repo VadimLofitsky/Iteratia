@@ -54,7 +54,7 @@ function exchange_getCurrencies(force, callback) {
             Accept: "application/json; charset=utf-8"
         },
         data: {
-            force: force
+            forceSending: force
         },
         success: (response) => {
             if (response.length != 0) {

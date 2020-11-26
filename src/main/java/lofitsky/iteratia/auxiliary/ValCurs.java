@@ -6,6 +6,10 @@ import lombok.Data;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
+/**
+ * Представление структуры XML в ответе сервиса ЦБ с курсами валют с использованием класса {@link Currency}.
+ */
+
 @Data
 @XmlRootElement(name = "ValCurs")
 @XmlAccessorType(XmlAccessType.FIELD)

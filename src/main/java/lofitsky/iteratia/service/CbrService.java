@@ -1,7 +1,6 @@
 package lofitsky.iteratia.service;
 
 import lofitsky.iteratia.auxiliary.ValCurs;
-import lofitsky.iteratia.config.Endpoints;
 import lofitsky.iteratia.model.Currency;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +13,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Сервис по получению данных о курсах валют.<br>
+ * Источник данных - сервис ЦБ РФ,
+ * <a href="https://www.cbr.ru/scripts/XML_daily.asp">https://www.cbr.ru/scripts/XML_daily.asp</a>
+ */
+
 @Service
 public class CbrService {
 
+    private final String CBR_XML_CURRENCIES_DAILY_URL = "https://www.cbr.ru/scripts/XML_daily.asp";
+
     private Unmarshaller UNMARSHALLER;
 
-    private boolean cached = false;
     private ValCurs valcurs = null;
 
     public CbrService() {
@@ -30,32 +36,34 @@ public class CbrService {
         }
     }
 
-    private List<Currency> getValutes(boolean useCache) {
-        if (cached && useCache) {
-            return valcurs.getValutes();
-        } else {
-            return getValutes();
-        }
-    }
-
-    private List<Currency> getValutes() {
-        parse();
-        return valcurs.getValutes();
-    }
-
+    /**
+     * Получает курсы валют виде XML и преобразует в объект {@link ValCurs}.<br>
+     * Источник данных указывается в <i><b>Endpoints.CBR_XML_CURRENCIES_DAILY_URL</b></i>.
+     * @see ValCurs
+     */
     private void parse() {
         try {
-            valcurs = (ValCurs) UNMARSHALLER.unmarshal(new URL(Endpoints.CBR_XML_CURRENCIES_DAILY_URL));
-            cached = true;
+            valcurs = (ValCurs) UNMARSHALLER.unmarshal(new URL(CBR_XML_CURRENCIES_DAILY_URL));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public List<Currency> getCurrencies(boolean cached) {
-        return getValutes(cached);
+    /**
+     * Возвращает список валют (объектов {@link Currency}).
+     * @return список валют
+     * @see Currency
+     */
+    public List<Currency> getCurrencies() {
+        parse();
+        return valcurs.getValutes();
     }
 
+    /**
+     * Возвращает дату, на которую получены курсы.
+     * Соответствует атрибуту Date корневого элемента ValCurs
+     * @return java.util.Date дату
+     */
     public Date getDate() {
         try {
             SimpleDateFormat fromXML = new SimpleDateFormat("dd.MM.yyyy");

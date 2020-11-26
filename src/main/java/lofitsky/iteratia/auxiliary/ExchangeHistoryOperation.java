@@ -4,6 +4,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Класс, описывающий ответ на запрос по получению операции конвертирования валют:
+ * <pre>
+ * <i>id</i> - идентификатор в таблице базы данных
+ * <i>date</i> - да совершения операции
+ * <i>charCode1, charCode2</i> - символьные коды валют
+ * <i>numCode1, numCode2</i> - числовые коды валют
+ * <i>name1, name2</i> - названия валют
+ * <i>amount1, amount2</i> - соответствующие валютам объёмы операции
+ * <i>rate</i> - курс конвертации
+ * </pre>
+ */
+
 @Getter
 @Setter
 @Builder
