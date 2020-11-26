@@ -5,6 +5,10 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Дата установления курсов валют из ответа сервиса ЦБ (атрибут Date корневого элемента ValCurs).
+ */
+
 @Data
 @Entity
 @Table(name = "update")
