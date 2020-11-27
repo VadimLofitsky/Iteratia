@@ -46,17 +46,8 @@ function exchange_checkForUpdates(force = false, callback) {
 
 function exchange_getCurrencies(force, callback) {
     exchange_startAnimation();
-    $.ajax({
-        url: ROUTE_GET_ALL_CURRENCIES,
-        method: "GET",
-        cache: false,
-        headers: {
-            Accept: "application/json; charset=utf-8"
-        },
-        data: {
-            forceSending: force
-        },
-        success: (response) => {
+    query(GRAPHQL_QUERY_ALL_CURRENCIES, (response) => {
+            response = response.allCurrencies;
             if (response.length != 0) {
                 exchange_currencies = [];
                 response.forEach((curr) => {
@@ -71,8 +62,9 @@ function exchange_getCurrencies(force, callback) {
             if (callback) {
                 callback.call(response);
             }
-        }
-    }).done(() => { exchange_stopAnimation(); });
+
+            exchange_stopAnimation();
+        });
 }
 
 function exchange_fillSelects() {
@@ -124,20 +116,15 @@ function exchange_onSelectToChange() {
 
 function exchange_formExchangeSubmit() {
     let date = dateToUTC(new Date());
+    let q = query_prepare(GRAPHQL_MUTATION_CREATE_EXCHANGE_HISTORYO_PERATION, [
+        date,
+        exchange_form.elements.curr1.value,
+        exchange_form.elements.curr2.value,
+        exchange_form.elements.amount1.value
+    ]);
 
-    $.ajax({
-        url: exchange_form.action,
-        method: "POST",
-        cache: false,
-        data: {
-            curr1: exchange_form.elements.curr1.value,
-            curr2: exchange_form.elements.curr2.value,
-            amount1: exchange_form.elements.amount1.value,
-            date: date
-        },
-        success: function () {
-            exchange_reset();
-        }
+    query(q, () => {
+        exchange_reset();
     });
 
     return false;

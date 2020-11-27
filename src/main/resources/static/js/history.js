@@ -26,38 +26,36 @@ function history_updateTable() {
 }
 
 function history_getNewOperations(callback) {
+    //
+    // lastId: history_lastId
+    //
     history_startAnimation();
-    $.ajax({
-        url: ROUTE_HISTORY_GET_TOP,
-        method: "GET",
-        cache: false,
-        data: {
-          lastId: history_lastId
-        },
-        headers: {
-            Accept: "application/json; charset=utf-8"
-        },
-        success: (response) => {
+    query(GRAPHQL_QUERY_HISTORY_RECORDS, (response) => {
+        response = response.historyRecords;
+        if (response.length != 0) {
             history_newOperations = response;
-            if (callback) {
-                callback.call(response);
-            }
         }
-    }).done(() => { history_stopAnimation(); });
+
+        if (callback) {
+            callback.call(response);
+        }
+
+        history_stopAnimation();
+    });
 }
 
 function history_createNewTR(operation) {
     var html = "<tr>";
     html += "<td class=\"history-col-onum\">" + operation.id + "</td>";
     html += "<td class=\"history-col-date\">" + operation.date + "</td>";
-    html += "<td class=\"history-col-char-code\">" + operation.charCode1 + "</td>";
-    html += "<td class=\"history-col-num-code\">" + operation.numCode1 + "</td>";
-    html += "<td class=\"history-col-name\">" + operation.name1 + "</td>";
-    html += "<td class=\"history-col-amount\">" + operation.amount1 + "</td>";
-    html += "<td class=\"history-col-char-code\">" + operation.charCode2 + "</td>";
-    html += "<td class=\"history-col-num-code\">" + operation.numCode2 + "</td>";
-    html += "<td class=\"history-col-name\">" + operation.name2 + "</td>";
-    html += "<td class=\"history-col-amount\">" + operation.amount2 + "</td>";
+    html += "<td class=\"history-col-char-code\">" + operation.from.charCode + "</td>";
+    html += "<td class=\"history-col-num-code\">" + operation.from.numCode + "</td>";
+    html += "<td class=\"history-col-name\">" + operation.from.name + "</td>";
+    html += "<td class=\"history-col-amount\">" + operation.amountFrom + "</td>";
+    html += "<td class=\"history-col-char-code\">" + operation.to.charCode + "</td>";
+    html += "<td class=\"history-col-num-code\">" + operation.to.numCode + "</td>";
+    html += "<td class=\"history-col-name\">" + operation.to.name + "</td>";
+    html += "<td class=\"history-col-amount\">" + operation.amountTo + "</td>";
     html += "<td class=\"history-col-rate\">" + operation.rate + "</td>";
     html += "</tr>";
     return html;

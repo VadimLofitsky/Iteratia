@@ -21,10 +21,6 @@ public class CurrencyControllerWeb {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public String main(Model model) {
-        // Передача значения для атрибута action формы на странице
-        model.addAttribute("form_exchange_action",
-                Endpoints.MAPPING_ROOT + Endpoints.MAPPING_EXCHANGE_OPERATION_SAVE);
-
         return Endpoints.TEMPLATES_MAIN_PAGE;
     }
 
