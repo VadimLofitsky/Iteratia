@@ -26,11 +26,9 @@ function history_updateTable() {
 }
 
 function history_getNewOperations(callback) {
-    //
-    // lastId: history_lastId
-    //
     history_startAnimation();
-    query(GRAPHQL_QUERY_HISTORY_RECORDS, (response) => {
+    let q = query_prepare(GRAPHQL_QUERY_HISTORY_RECORDS, [history_lastId]);
+    query(q, (response) => {
         response = response.historyRecords;
         if (response.length != 0) {
             history_newOperations = response;
