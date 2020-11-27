@@ -2,11 +2,15 @@ package lofitsky.iteratia.service;
 
 import lofitsky.iteratia.auxiliary.ExchangeHistoryOperation;
 import lofitsky.iteratia.auxiliary.ExchangeHistoryStat;
+import lofitsky.iteratia.model.Currency;
 import lofitsky.iteratia.model.ExchangeHistory;
 import lofitsky.iteratia.repository.ExchangeHistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,14 +22,33 @@ import java.util.stream.Collectors;
 public class ExchangeHistoryService {
 
     private ExchangeHistoryRepo historyRepo;
+    private CurrencyService currencyService;
 
     @Autowired
-    public ExchangeHistoryService(ExchangeHistoryRepo historyRepo) {
+    public ExchangeHistoryService(ExchangeHistoryRepo historyRepo, CurrencyService currencyService) {
         this.historyRepo = historyRepo;
+        this.currencyService = currencyService;
     }
 
-    public void save(ExchangeHistory record) {
-        historyRepo.save(record);
+    public ExchangeHistory save(String timeStamp, String numCodeFrom, String numCodeTo, String amount) {
+        LocalDateTime date = LocalDateTime.ofInstant(
+                Instant.ofEpochSecond(Long.parseLong(timeStamp)),
+                ZoneId.systemDefault());
+
+        Currency from = currencyService.findByNumCode(Integer.parseInt(numCodeFrom));
+        Currency to = currencyService.findByNumCode(Integer.parseInt(numCodeTo));
+
+        // вычисление курса между валютами на основании их курсов к рублю
+        float relRate = currencyService.relativeRate(from, to);
+
+        ExchangeHistory operation = new ExchangeHistory();
+        operation.setDate(date);
+        operation.setCurrencyFrom(from);
+        operation.setCurrencyTo(to);
+        operation.setRate(relRate);
+        operation.setAmount(Float.parseFloat(amount));
+
+        return historyRepo.save(operation);
     }
 
     /**
@@ -46,7 +69,7 @@ public class ExchangeHistoryService {
     /**
      * Возвращает список операций с id, большим указанного. Список отсортирован по убыванию id
      * и предназначен для преобразования в JSON-объект
-     * для передачи в качестве ответа REST-контроллером {@link lofitsky.iteratia.controller.CurrencyControllerREST}.
+     * для передачи в качестве ответа от GraphQL.
      * @param lastId id для фильтрации записей (наибольший из непопадающих в выборку)
      * @return отсортированный по убыванию id список операций (список {@link ExchangeHistoryOperation})
      */

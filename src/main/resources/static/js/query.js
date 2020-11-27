@@ -1,0 +1,4 @@
+const GRAPHQL_QUERY_ALL_CURRENCIES = `{"query": "{allCurrencies {numCode charCode nominal value name}}"}`;
+const GRAPHQL_QUERY_HISTORY_RECORDS = '{"query": "{historyRecords(afterId: 0) {id date from { charCode numCode name } amountFrom to { charCode numCode name } amountTo rate}}"}';
+const GRAPHQL_QUERY_ALL_STATS = `{"query": "{allStats {from {charCode numCode name} to {charCode numCode name} totalSum avgRate}}"}`;
+const GRAPHQL_MUTATION_CREATE_EXCHANGE_HISTORYO_PERATION = `{"query": "mutation {createExchangeHistoryOperation(date: \\"?\\", numCodeFrom: \\"?\\", numCodeTo: \\"?\\", amount: \\"?\\")}"}`;

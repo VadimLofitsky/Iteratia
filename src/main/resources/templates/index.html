@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Currency exchange service</title>
 
     <link rel="stylesheet" href="css/index.css">
 
+    <script src="js/graphql.js"></script>
     <script src="js/routing.js"></script>
+    <script src="js/query.js"></script>
     <script src="js/index.js"></script>
     <script src="js/exchange.js"></script>
     <script src="js/history.js"></script>
@@ -60,7 +62,7 @@
         <div id="exchange" class="active show container tab-pane fade mt-3 mb-3 pb-3 rounded">
             <div class="tab-header">Currency exchange</div>
             <div class="text-center shadow mb-5 rounded">
-                <form name="form_exchange" method="post" th:action="${form_exchange_action}" class="form-inline" id="form_exchange">
+                <form name="form_exchange" method="post" action="/" class="form-inline" id="form_exchange">
                     <input type="hidden" name="rel_rate" value="">
                     <div class="row w-100 ml-0 mr-0 mt-1">
                         <div class="col-2">&nbsp;</div>

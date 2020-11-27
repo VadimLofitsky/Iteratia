@@ -1,0 +1,36 @@
+type Query {
+  allCurrencies: [Currency],
+  historyRecords(afterId: Int!): [ExchangeHistoryOperation],
+  allStats: [ExchangeHistoryStat]
+}
+
+type Mutation {
+  createExchangeHistoryOperation(date: String!, numCodeFrom: String!, numCodeTo: String!, amount: String!): Int
+}
+
+type Currency {
+  id: ID,
+  rId: String!,
+  numCode: Int!,
+  charCode: String!,
+  nominal: Int!,
+  name: String!,
+  value: Float!
+}
+
+type ExchangeHistoryOperation {
+  id: ID,
+  date: String,
+  from: Currency,
+  amountFrom: Float,
+  to: Currency,
+  amountTo: Float
+  rate: Float,
+}
+
+type ExchangeHistoryStat {
+  from: Currency
+  to: Currency
+  totalSum: Float
+  avgRate: Float
+}
